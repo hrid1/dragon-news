@@ -4,7 +4,7 @@ import Header from "../../components/Header";
 
 const RootPage = () => {
   return (
-    <div>
+    <div className="font-Popins">
       <Header></Header>
       <Outlet></Outlet>
       <Footer></Footer>
