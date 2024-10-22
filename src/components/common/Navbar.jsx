@@ -1,7 +1,18 @@
 import { Link, NavLink } from "react-router-dom";
-import user from "../../assets/user.png";
+import userPic from "../../assets/user.png";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navbar = () => {
+  const { user, logoutUser } = useContext(AuthContext);
+  // console.log(user);
+  const handleLogout = () => {
+    logoutUser()
+      .then(alert("sign out done"))
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
   const NavLinks = (
     <>
       <li>
@@ -48,14 +59,26 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{NavLinks}</ul>
       </div>
       <div className="navbar-end flex gap-2.5 items-center">
-        <img className="w-8 h-8 rounded-full" src={user} alt="nai" />
+        <img className="w-8 h-8 rounded-full" src={userPic} alt="nai" />
+        {user && <p className=" font-medium">{user?.displayName}</p>}
 
-        <Link
-          to={"login"}
-          className="bg-red-200 py-2  font-semibold rounded px-6"
-        >
-          Login
-        </Link>
+        <div className="flex">
+          {user ? (
+            <Link
+              onClick={handleLogout}
+              className="bg-red-200 py-2  font-semibold rounded px-4"
+            >
+              Logout
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-red-200 py-2  font-semibold rounded px-6"
+            >
+              Login
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );
