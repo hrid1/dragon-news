@@ -4,8 +4,21 @@ import Navbar from "../../components/common/Navbar";
 import Marquee from "react-fast-marquee";
 import RightSide from "../../components/common/RightSide";
 import LeftSide from "../../components/others/LeftSide";
+import { useLoaderData } from "react-router-dom";
+import NewsCard from "../../components/others/NewsCard";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+
+  const news = useLoaderData();
+
+  if(!news){
+    return <h3>hi boss</h3>
+  }
+
+  // console.log(news);
+  
+ 
   return (
     <div className="container mx-auto">
       <Header></Header>
@@ -26,8 +39,11 @@ const Home = () => {
         </div>
         <div className=" col-span-2 ">
           <h2 className="text-xl font-semibold">Dragon News Home</h2>
+          {/* news */}
 
-
+          {news?.map((anews) => (
+            <NewsCard key={anews._id} news={anews}></NewsCard>
+          ))}
         </div>
         <div className=" col-span-1 ">
           <RightSide></RightSide>
