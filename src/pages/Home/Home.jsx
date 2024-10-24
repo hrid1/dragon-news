@@ -9,16 +9,18 @@ import NewsCard from "../../components/others/NewsCard";
 import { useEffect, useState } from "react";
 
 const Home = () => {
+  const allnews = useLoaderData() || [];
+  const [news, setNews] = useState(allnews);
 
-  const news = useLoaderData();
-
-  if(!news){
-    return <h3>hi boss</h3>
+  if (!Array.isArray(news)) {
+    // return <h3>There is no news</h3>
+    useEffect(() => {
+      setNews(useLoaderData());
+    }, [allnews]);
   }
 
-  // console.log(news);
-  
- 
+  console.log(news);
+
   return (
     <div className="container mx-auto">
       <Header></Header>
@@ -41,7 +43,7 @@ const Home = () => {
           <h2 className="text-xl font-semibold">Dragon News Home</h2>
           {/* news */}
 
-          {news?.map((anews) => (
+          {news.map((anews) => (
             <NewsCard key={anews._id} news={anews}></NewsCard>
           ))}
         </div>
